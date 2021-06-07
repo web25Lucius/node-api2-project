@@ -30,6 +30,21 @@ router.get("/api/posts/:id", (req, res) => {
 
 
 
+router.get("/api/posts/:id/comments", (req, res) => {
+    const post = posts.findById(req.params.id)
+    if(post) {
+    res.json(post)
+    } else if (!post){
+        res.status(404).json({
+            message: "The post with the specified ID does not exist",
+        })
+    } else {
+        res.status(500).json({ message: "The post information could not be retrieved", })
+    }
+})
+
+
+
 router.post("/api/posts/", (req, res) => {
     const newPost = posts.insert({
        
@@ -92,6 +107,8 @@ router.delete("/api/posts/:id", (req, res) =>{
         res.status(500).json({message : "The post could not be modified"})
     }
 })
+
+
 module.exports = router
 
 
